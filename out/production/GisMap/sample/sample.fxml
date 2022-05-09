@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="435.0" prefWidth="727.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <SplitPane dividerPositions="0.5016722408026756" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="290.0" prefWidth="205.0">
+               <children>
+                  <ImageView fx:id="myMap" fitHeight="NaN" fitWidth="NaN" layoutY="28.0" onMouseMoved="#getCoords" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="69.8521838263531" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.008702187204846723" AnchorPane.topAnchor="27.817384630862847" />
+                  <MenuBar fx:id="menu" layoutY="-1.0" prefHeight="28.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-303.0260970082854" AnchorPane.topAnchor="0.0">
+                    <menus>
+                      <Menu fx:id="file_menu" mnemonicParsing="false" text="Файл">
+                        <items>
+                          <MenuItem fx:id="open_file" mnemonicParsing="false" onAction="#openNewFile" text="Открыть" />
+                              <MenuItem mnemonicParsing="false" onAction="#registerCoords" text="Регистрация карты" />
+                              <MenuItem fx:id="close_file" mnemonicParsing="false" onAction="#closeApp" text="Закрыть" />
+                        </items>
+                      </Menu>
+                      <Menu fx:id="data_menu" mnemonicParsing="false" text="Данные">
+                        <items>
+                          <MenuItem fx:id="craete_data" mnemonicParsing="false" text="Создать" />
+                              <MenuItem fx:id="select_menu" mnemonicParsing="false" text="Выбрать" />
+                        </items>
+                      </Menu>
+                      <Menu fx:id="tasks_menu" mnemonicParsing="false" text="Задачи">
+                        <items>
+                          <MenuItem fx:id="line_menu" mnemonicParsing="false" text="Линия" />
+                              <MenuItem fx:id="polygon_menu" mnemonicParsing="false" text="Полигон" />
+                              <MenuItem fx:id="ellips_menu" mnemonicParsing="false" text="Эллипс" />
+                              <MenuItem fx:id="width_menu" mnemonicParsing="false" text="Длина" />
+                              <MenuItem fx:id="perim_menu" mnemonicParsing="false" text="Периметр" />
+                              <MenuItem fx:id="square_menu" mnemonicParsing="false" text="Площадь" />
+                              <MenuItem fx:id="toxic" mnemonicParsing="false" text="Заражение" />
+                        </items>
+                      </Menu>
+                    </menus>
+                  </MenuBar>
+               </children></AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="366.0" prefWidth="296.0">
+               <children>
+                  <Label layoutX="-1.0" layoutY="4.0" text="Координаты выбранной точки" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="132.89565654906087" AnchorPane.topAnchor="0.0" />
+                  <Label layoutX="-16.0" layoutY="16.0" prefHeight="18.0" prefWidth="110.0" text="X" AnchorPane.leftAnchor="0.0" fx:id="x_coord" />
+                  <Label fx:id="y_coord" layoutX="119.0" layoutY="16.0" prefHeight="18.0" prefWidth="110.0" text="Y" AnchorPane.leftAnchor="119.0" />
+                  <Label layoutY="55.0" text="Закрепление" AnchorPane.leftAnchor="0.0" />
+                  <Label fx:id="nowRegX" layoutY="73.0" prefHeight="18.0" prefWidth="110.0" text="null" AnchorPane.leftAnchor="0.0" />
+                  <Label fx:id="nowRegY" layoutX="119.0" layoutY="73.0" prefHeight="18.0" prefWidth="110.0" text="null" AnchorPane.leftAnchor="119.0" />
+               </children></AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

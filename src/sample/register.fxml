@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.RegisterController">
+   <children>
+      <Label prefHeight="71.0" prefWidth="129.0" text="Введите Х" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Label layoutY="72.0" prefHeight="72.0" prefWidth="129.0" text="Введите У" AnchorPane.leftAnchor="0.0" />
+      <TextField fx:id="regY" layoutX="145.0" layoutY="95.0" AnchorPane.rightAnchor="309.74782126875573" />
+      <TextField fx:id="regX" layoutX="145.0" layoutY="22.0" AnchorPane.rightAnchor="309.74782126875573" AnchorPane.topAnchor="22.0" />
+      <Button layoutX="14.0" layoutY="186.0" mnemonicParsing="false" onAction="#regCoords" text="Сохранить" AnchorPane.bottomAnchor="187.28695563563323" AnchorPane.leftAnchor="14.0" />
+      <Button layoutX="117.0" layoutY="186.0" mnemonicParsing="false" onAction="#cancel" text="Отмена" AnchorPane.bottomAnchor="187.28695563563323" AnchorPane.rightAnchor="426.2347807257206" />
+   </children>
+</AnchorPane>
