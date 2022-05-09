@@ -11,6 +11,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -40,6 +43,18 @@ public class Controller {
     private Double x_coordVal;
     private Double y_coordVal;
 
+    public static Boolean isMapRegister;
+    private Boolean isDrawLine = false;
+    private Boolean isDrawPoly = false;
+    private Boolean isDrawEllipse = false;
+
+    private Double xLineStart;
+    private Double yLineStart;
+    private Double xLineEnd;
+    private Double yLineEnd;
+
+    private Integer countPoints = 0;
+
     @FXML
     private Label x_coord;
     @FXML
@@ -49,6 +64,8 @@ public class Controller {
     public static Double regY;
 
     @FXML
+    private AnchorPane imgAnchor;
+    @FXML
     private ImageView myMap;
     @FXML
     private Label nowRegX;
@@ -57,6 +74,7 @@ public class Controller {
 
     @FXML
     private void openNewFile() throws IOException {
+        isMapRegister = false;
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(sample);
         if (file != null)
@@ -89,43 +107,66 @@ public class Controller {
 
     @FXML
     private void getCoords(MouseEvent mouseEvent) throws IOException {
-        startX = myMap.getX();
-        startY = myMap.getImage().getHeight();
+        if (isMapRegister) {
+            startX = myMap.getX();
+            startY = myMap.getImage().getHeight();
 
-        chooseX = mouseEvent.getX();
-        chooseY = mouseEvent.getY();
+            chooseX = mouseEvent.getX();
+            chooseY = mouseEvent.getY();
 
-        Double width = chooseX - startX;
-        Double height = chooseY - startY;
+            Double width = chooseX - startX;
+            Double height = chooseY - startY;
 
-        System.out.println(width);
-        gottenX = regX + width*widthGrad/myMap.getImage().getWidth();
-        gottenY = regY - height*heightGrad/myMap.getImage().getHeight();
-        System.out.println(gottenX+" "+gottenY);
+            gottenX = regX + width * widthGrad / myMap.getImage().getWidth();
+            gottenY = regY - height * heightGrad / myMap.getImage().getHeight();
 
-        y_coord.setText(gottenX.toString());
-        x_coord.setText(gottenY.toString());
+            y_coord.setText(gottenX.toString());
+            x_coord.setText(gottenY.toString());
 
-        x_coordVal = gottenY;
-        y_coordVal = gottenX;
+            x_coordVal = gottenY;
+            y_coordVal = gottenX;
+        }else{
+
+        }
     }
 
     @FXML
     private void onClickLineBtn()
     {
+        isDrawLine = true;
+    }
+    @FXML
+    private void draw(MouseEvent mouseEvent){
+        if (isDrawLine){
+            if (countPoints==0) {
+                xLineStart = mouseEvent.getX();
+                yLineStart = mouseEvent.getY();
+                countPoints++;
+            }else{
+                xLineEnd = mouseEvent.getX();
+                yLineEnd = mouseEvent.getY();
+                Line line = new Line(xLineStart,yLineStart,xLineEnd,yLineEnd);
+                line.setStrokeWidth(3);
+                line.setStroke(Color.BLUE);
+                imgAnchor.getChildren().add(line);
+                countPoints=0;
+                isDrawLine=false;
+            }
+        }else{
 
+        }
     }
 
     @FXML
     private void onClickEllipseBtn()
     {
-
+        isDrawEllipse = true;
     }
 
     @FXML
     private void onClickPolygonBtn()
     {
-
+        isDrawPoly = true;
     }
 
     @FXML

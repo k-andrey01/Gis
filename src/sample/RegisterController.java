@@ -20,6 +20,7 @@ public class RegisterController {
     private void regCoords() throws IOException {
         Controller.regX = Double.parseDouble(regX.getText());
         Controller.regY = Double.parseDouble(regY.getText());
+        Controller.isMapRegister = true;
 
         Stage stage = (Stage) regX.getScene().getWindow();
         // do what you have to do
