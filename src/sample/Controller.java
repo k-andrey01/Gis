@@ -13,15 +13,23 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 
+import static java.lang.Math.abs;
+import static java.lang.Math.sqrt;
+
 public class Controller {
+
     public static Stage sample;
     private Image image;
 
@@ -52,6 +60,13 @@ public class Controller {
     private Double yLineStart;
     private Double xLineEnd;
     private Double yLineEnd;
+
+    private Double ellipseRadiusX;
+    private Double ellipseRadiusY;
+
+    ArrayList<Double> polyLines = new ArrayList<Double>();
+    private Boolean stopGetPoints = false;
+    private int counterPoints = 2;
 
     private Integer countPoints = 0;
 
@@ -125,8 +140,6 @@ public class Controller {
 
             x_coordVal = gottenY;
             y_coordVal = gottenX;
-        }else{
-
         }
     }
 
@@ -134,26 +147,141 @@ public class Controller {
     private void onClickLineBtn()
     {
         isDrawLine = true;
+        isDrawPoly = false;
+        isDrawEllipse = false;
     }
     @FXML
     private void draw(MouseEvent mouseEvent){
         if (isDrawLine){
             if (countPoints==0) {
                 xLineStart = mouseEvent.getX();
-                yLineStart = mouseEvent.getY();
+                yLineStart = mouseEvent.getY()+30;
                 countPoints++;
             }else{
                 xLineEnd = mouseEvent.getX();
-                yLineEnd = mouseEvent.getY();
+                yLineEnd = mouseEvent.getY()+30;
                 Line line = new Line(xLineStart,yLineStart,xLineEnd,yLineEnd);
-                line.setStrokeWidth(3);
+                line.setStrokeWidth(5);
                 line.setStroke(Color.BLUE);
                 imgAnchor.getChildren().add(line);
+                EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>()
+                {
+                    @Override
+                    public void handle(MouseEvent mouseEvent)
+                    {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("GIS");
+
+                        if (isMapRegister)
+                        {
+                            alert.setHeaderText("Информация о линии");
+                            Double width1 = xLineStart - startX;
+                            Double height1 = yLineStart - startY;
+
+                            Double gottenX1 = regX + width1 * widthGrad / myMap.getImage().getWidth();
+                            Double gottenY1 = regY - height1 * heightGrad / myMap.getImage().getHeight();
+
+                            Double width2 = xLineEnd - startX;
+                            Double height2 = yLineEnd - startY;
+
+                            Double gottenX2 = regX + width2 * widthGrad / myMap.getImage().getWidth();
+                            Double gottenY2 = regY - height2 * heightGrad / myMap.getImage().getHeight();
+
+                            alert.setContentText(String.valueOf(111.3*sqrt(abs(gottenX2-gottenX1)+abs(gottenY2-gottenY1))));
+                        }
+                        else
+                        {
+                            alert.setHeaderText("Для получения данных зарегистрируйте карту!");
+                        }
+
+                        ButtonType ok = new ButtonType("ОК");
+                        ButtonType delete = new ButtonType("Удалить");
+                        alert.getButtonTypes().clear();
+                        alert.getButtonTypes().addAll(ok, delete);
+
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.get() == delete)
+                        {
+                            imgAnchor.getChildren().remove(line);
+                        }
+                    }
+                };
+                line.setOnMouseClicked(eventHandler);
                 countPoints=0;
                 isDrawLine=false;
             }
-        }else{
+        }
 
+        else if (isDrawPoly){
+            if (countPoints==0){
+                counterPoints = 2;
+                polyLines.clear();
+                xLineStart = mouseEvent.getX();
+                yLineStart = mouseEvent.getY()+30;
+                Line line1 = new Line(xLineStart,yLineStart,xLineStart,yLineStart);
+                line1.setStrokeWidth(5);
+                line1.setStroke(Color.ORANGE);
+                imgAnchor.getChildren().add(line1);
+                polyLines.add(xLineStart);
+                polyLines.add(yLineStart);
+                countPoints++;
+            }else{
+                if (!stopGetPoints && counterPoints<=50){
+                    xLineEnd = mouseEvent.getX();
+                    yLineEnd = mouseEvent.getY()+30;
+                    Line line1 = new Line(xLineEnd,yLineEnd,xLineEnd,yLineEnd);
+                    line1.setStrokeWidth(5);
+                    line1.setStroke(Color.ORANGE);
+                    imgAnchor.getChildren().add(line1);
+                    polyLines.add(xLineEnd);
+                    polyLines.add(yLineEnd);
+                    if (counterPoints>0)
+                        stopGetPoints = (polyLines.get(counterPoints) - polyLines.get(0)<20) && (polyLines.get(counterPoints+1) - polyLines.get(1)<20);
+                    counterPoints+=2;
+                }
+
+                else {
+                    double[] doublePolyLines = new double[polyLines.size()];
+                    int i = 0;
+                    for (Double point : polyLines) {
+                        doublePolyLines[i] = point;
+                        i++;
+                    }
+                    Polygon polygon = new Polygon(doublePolyLines);
+                    polygon.setStroke(Color.ORANGE);
+                    polygon.setStrokeWidth(3);
+                    polygon.setFill(Color.YELLOW);
+                    imgAnchor.getChildren().add(polygon);
+                    countPoints = 0;
+                    isDrawPoly = false;
+                    stopGetPoints = false;
+                    polyLines.clear();
+                }
+            }
+        }
+
+        else if (isDrawEllipse){
+            if (countPoints==0){
+                xLineStart = mouseEvent.getX();
+                yLineStart = mouseEvent.getY()+30;
+                countPoints++;
+            }
+            else if (countPoints==1){
+                ellipseRadiusX = abs(mouseEvent.getX()-xLineStart);
+                countPoints++;
+            }
+            else if (countPoints==2){
+                ellipseRadiusY = abs(mouseEvent.getY()+30-yLineStart);
+                countPoints++;
+
+                Ellipse ellipse = new Ellipse(xLineStart,yLineStart,ellipseRadiusX,ellipseRadiusY);
+                ellipse.setStroke(Color.GREEN);
+                ellipse.setStrokeWidth(3);
+                ellipse.setFill(Color.GREENYELLOW);
+                imgAnchor.getChildren().add(ellipse);
+                countPoints = 0;
+                isDrawEllipse = false;
+            }
         }
     }
 
@@ -161,12 +289,16 @@ public class Controller {
     private void onClickEllipseBtn()
     {
         isDrawEllipse = true;
+        isDrawLine = false;
+        isDrawPoly = false;
     }
 
     @FXML
     private void onClickPolygonBtn()
     {
         isDrawPoly = true;
+        isDrawLine = false;
+        isDrawEllipse = false;
     }
 
     @FXML
