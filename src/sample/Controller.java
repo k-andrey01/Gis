@@ -25,8 +25,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import static java.lang.Math.abs;
-import static java.lang.Math.sqrt;
+import static java.lang.Math.*;
 
 public class Controller {
 
@@ -150,6 +149,7 @@ public class Controller {
         isDrawPoly = false;
         isDrawEllipse = false;
     }
+
     @FXML
     private void draw(MouseEvent mouseEvent){
         if (isDrawLine){
@@ -163,7 +163,7 @@ public class Controller {
                 Line line = new Line(xLineStart,yLineStart,xLineEnd,yLineEnd);
                 line.setStrokeWidth(5);
                 line.setStroke(Color.BLUE);
-                imgAnchor.getChildren().add(line);
+
                 EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>()
                 {
                     @Override
@@ -178,16 +178,16 @@ public class Controller {
                             Double width1 = xLineStart - startX;
                             Double height1 = yLineStart - startY;
 
-                            Double gottenX1 = regX + width1 * widthGrad / myMap.getImage().getWidth();
-                            Double gottenY1 = regY - height1 * heightGrad / myMap.getImage().getHeight();
+                            Double gottenX1 = 63.9 * (regX + width1 * widthGrad / myMap.getImage().getWidth());
+                            Double gottenY1 = 63.9 * (regY - height1 * heightGrad / myMap.getImage().getHeight());
 
                             Double width2 = xLineEnd - startX;
                             Double height2 = yLineEnd - startY;
 
-                            Double gottenX2 = regX + width2 * widthGrad / myMap.getImage().getWidth();
-                            Double gottenY2 = regY - height2 * heightGrad / myMap.getImage().getHeight();
+                            Double gottenX2 = 63.9*(regX + width2 * widthGrad / myMap.getImage().getWidth());
+                            Double gottenY2 = 63.9*(regY - height2 * heightGrad / myMap.getImage().getHeight());
 
-                            alert.setContentText(String.valueOf(111.3*sqrt(abs(gottenX2-gottenX1)+abs(gottenY2-gottenY1))));
+                            alert.setContentText("Длина: " + sqrt(abs(gottenX2-gottenX1)+abs(gottenY2-gottenY1)));
                         }
                         else
                         {
@@ -207,6 +207,8 @@ public class Controller {
                     }
                 };
                 line.setOnMouseClicked(eventHandler);
+
+                imgAnchor.getChildren().add(line);
                 countPoints=0;
                 isDrawLine=false;
             }
@@ -251,11 +253,58 @@ public class Controller {
                     polygon.setStroke(Color.ORANGE);
                     polygon.setStrokeWidth(3);
                     polygon.setFill(Color.YELLOW);
+                    EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>()
+                    {
+                        @Override
+                        public void handle(MouseEvent mouseEvent)
+                        {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("GIS");
+
+                            if (isMapRegister)
+                            {
+                                alert.setHeaderText("Информация о полигоне");
+                                Double perimeter = 0.0;
+                                for (int i=0; i<polyLines.size()-2; i+=2) {
+                                        Double width1 = doublePolyLines[i] - startX;
+                                        Double height1 = doublePolyLines[i+1] - startY;
+
+                                        Double gottenX1 = 63.9 * (regX + width1 * widthGrad / myMap.getImage().getWidth());
+                                        Double gottenY1 = 63.9 * (regY - height1 * heightGrad / myMap.getImage().getHeight());
+
+                                        Double width2 = doublePolyLines[i+2] - startX;
+                                        Double height2 = doublePolyLines[i+3] - startY;
+
+                                        Double gottenX2 = 63.9 * (regX + width2 * widthGrad / myMap.getImage().getWidth());
+                                        Double gottenY2 = 63.9 * (regY - height2 * heightGrad / myMap.getImage().getHeight());
+
+                                    perimeter += sqrt(abs(gottenX2-gottenX1)+abs(gottenY2-gottenY1));
+                                }
+
+                                alert.setContentText("Периметр: "+perimeter);
+                            }
+                            else
+                            {
+                                alert.setHeaderText("Для получения данных зарегистрируйте карту!");
+                            }
+
+                            ButtonType ok = new ButtonType("ОК");
+                            ButtonType delete = new ButtonType("Удалить");
+                            alert.getButtonTypes().clear();
+                            alert.getButtonTypes().addAll(ok, delete);
+
+                            Optional<ButtonType> result = alert.showAndWait();
+                            if (result.get() == delete)
+                            {
+                                imgAnchor.getChildren().remove(polygon);
+                            }
+                        }
+                    };
+                    polygon.setOnMouseClicked(eventHandler);
                     imgAnchor.getChildren().add(polygon);
                     countPoints = 0;
                     isDrawPoly = false;
                     stopGetPoints = false;
-                    polyLines.clear();
                 }
             }
         }
@@ -278,6 +327,54 @@ public class Controller {
                 ellipse.setStroke(Color.GREEN);
                 ellipse.setStrokeWidth(3);
                 ellipse.setFill(Color.GREENYELLOW);
+                EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>()
+                {
+                    @Override
+                    public void handle(MouseEvent mouseEvent)
+                    {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("GIS");
+
+
+                        if (isMapRegister)
+                        {
+                            Double height1 = yLineStart - startY;
+                            Double gottenY1 = 63.9 * (regY - height1 * heightGrad / myMap.getImage().getHeight());
+                            Double height2 = yLineStart+ellipseRadiusY - startY;
+                            Double gottenY2 = 63.9*(regY - height2 * heightGrad / myMap.getImage().getHeight());
+                            Double radiusY = abs(gottenY2-gottenY1);
+
+                            Double width1 = xLineStart - startX;
+                            Double gottenX1 = 63.9 * (regX + width1 * widthGrad / myMap.getImage().getWidth());
+                            Double width2 = xLineStart+ellipseRadiusX - startX;
+                            Double gottenX2 = 63.9*(regX + width2 * widthGrad / myMap.getImage().getWidth());
+                            Double radiusX = abs(gottenX2-gottenX1);
+
+                            Double square = PI*2*radiusX*2*radiusY/4;
+
+                            Double perimeter = 2*PI*sqrt((4*radiusX*radiusX+4*radiusY*radiusY)/8);
+
+                            alert.setHeaderText("Информация об эллипсе");
+                            alert.setContentText("Площадь: "+square+"\nПериметр: "+perimeter+"\nРадиус вертикальный: "+radiusY+"\nРадиус горизонтальный: "+radiusX);
+                        }
+                        else
+                        {
+                            alert.setHeaderText("Для получения данных зарегистрируйте карту!");
+                        }
+
+                        ButtonType ok = new ButtonType("ОК");
+                        ButtonType delete = new ButtonType("Удалить");
+                        alert.getButtonTypes().clear();
+                        alert.getButtonTypes().addAll(ok, delete);
+
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.get() == delete)
+                        {
+                            imgAnchor.getChildren().remove(ellipse);
+                        }
+                    }
+                };
+                ellipse.setOnMouseClicked(eventHandler);
                 imgAnchor.getChildren().add(ellipse);
                 countPoints = 0;
                 isDrawEllipse = false;
@@ -310,7 +407,6 @@ public class Controller {
     @FXML
     private void closeApp(){
         Stage stage = (Stage) myMap.getScene().getWindow();
-        // do what you have to do
         stage.close();
     }
 
