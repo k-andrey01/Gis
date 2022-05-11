@@ -20,7 +20,7 @@ public class MyPolygon {
 
     private double[] points;
 
-    private double perimeter;
+    private double perimeter = 0;
 
     public MyPolygon(Polygon polygon)
     {
@@ -33,7 +33,6 @@ public class MyPolygon {
                 alert.setTitle("GIS");
                 if (Controller.isMapRegister) {
                     alert.setHeaderText("Информация о полигоне");
-                    Double perimeter = 0.0;
                     for (int i=0; i<points.length-2; i+=2) {
                         Double width1 = points[i] - startX;
                         Double height1 = points[i+1] - startY;

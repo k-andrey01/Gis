@@ -46,6 +46,8 @@ public class MyLine {
                     Double gottenX2 = 63.9 * (regX + width2 * widthGrad / imgWidth);
                     Double gottenY2 = 63.9 * (regY - height2 * heightGrad / imgHeight);
 
+                    length = sqrt(abs(gottenX2 - gottenX1) + abs(gottenY2 - gottenY1));
+
                     alert.setContentText("Длина: " + sqrt(abs(gottenX2 - gottenX1) + abs(gottenY2 - gottenY1)));
                 } else {
                     alert.setHeaderText("Для получения данных зарегистрируйте карту!");

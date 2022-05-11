@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import sample.Shapes.MyEllipse;
 import sample.Shapes.MyLine;
 import sample.Shapes.MyPolygon;
+import sample.Shapes.MyZone;
 
 import java.awt.*;
 import java.io.File;
@@ -35,6 +36,11 @@ public class Controller {
     private static MyLine myLine;
     private static MyPolygon myPolygon;
     private static MyEllipse myEllipse;
+    private static MyZone myZone;
+    public ArrayList<MyLine> myLines = new ArrayList<>();
+    public ArrayList<MyPolygon> myPolygons = new ArrayList<>();
+    public ArrayList<MyEllipse> myEllipses = new ArrayList<>();
+    public ArrayList<MyZone> myZones = new ArrayList<>();
 
     public static Double imgHeight;
     public static Double imgWidth;
@@ -64,11 +70,12 @@ public class Controller {
     private Boolean isDrawLine = false;
     private Boolean isDrawPoly = false;
     private Boolean isDrawEllipse = false;
+    private Boolean isDrawZone = false;
 
-    private Double xLineStart;
-    private Double yLineStart;
-    private Double xLineEnd;
-    private Double yLineEnd;
+    public static Double xLineStart;
+    public static Double yLineStart;
+    public static Double xLineEnd;
+    public static Double yLineEnd;
 
     private Double ellipseRadiusX;
     private Double ellipseRadiusY;
@@ -156,13 +163,7 @@ public class Controller {
         }
     }
 
-    @FXML
-    private void onClickLineBtn()
-    {
-        isDrawLine = true;
-        isDrawPoly = false;
-        isDrawEllipse = false;
-    }
+
 
     @FXML
     private void draw(MouseEvent mouseEvent){
@@ -187,6 +188,8 @@ public class Controller {
 
                 myLine.getLine().setStrokeWidth(5);
                 myLine.getLine().setStroke(Color.BLUE);
+
+                myLines.add(myLine);
 
                 imgAnchor.getChildren().add(myLine.getLine());
                 countPoints=0;
@@ -236,6 +239,8 @@ public class Controller {
                     myPolygon.getPolygon().setStroke(Color.ORANGE);
                     myPolygon.getPolygon().setFill(Color.YELLOW);
 
+                    myPolygons.add(myPolygon);
+
                     imgAnchor.getChildren().add(myPolygon.getPolygon());
                     countPoints = 0;
                     isDrawPoly = false;
@@ -272,11 +277,73 @@ public class Controller {
                 myEllipse.getEllipse().setStrokeWidth(3);
                 myEllipse.getEllipse().setFill(Color.GREENYELLOW);
 
+                myEllipses.add(myEllipse);
+
                 imgAnchor.getChildren().add(myEllipse.getEllipse());
                 countPoints = 0;
                 isDrawEllipse = false;
             }
         }
+
+        else if (isDrawZone){
+            xLineStart = mouseEvent.getX();
+            yLineStart = mouseEvent.getY()+30;
+            try {
+                startZonaStage(xLineStart, yLineStart);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            myZone = new MyZone(new Ellipse());
+            double ygeoRadius = ZoneController.Sf / Math.PI / ZoneController.G;
+
+            myZone.getEllipse().setCenterX(xLineStart);
+            myZone.getEllipse().setCenterY(yLineStart);
+
+            Double height1 = abs(yLineStart - startY);
+            Double gottenY1 = 63.9 * (regY - height1 * heightGrad / imgHeight);
+
+            Double width1 = abs(xLineStart - startX);
+            Double gottenX1 = 63.9 * (regX + width1 * widthGrad / imgWidth);
+            myZone.setXgeoCenter(gottenX1);
+            myZone.setYgeoCenter(gottenY1);
+
+            Double hypo = sqrt(height1*height1+width1*width1);
+            myZone.getEllipse().setRadiusX(ygeoRadius*height1);
+            myZone.getEllipse().setRadiusY(ZoneController.G/63.9*width1);
+
+            myZone.getEllipse().setStrokeWidth(5);
+            myZone.getEllipse().setStroke(Color.DARKGREEN);
+            myZone.getEllipse().setFill(Color.GREEN);
+            myZone.setGeoSquare(ZoneController.Sf);
+            myZones.add(myZone);
+
+            imgAnchor.getChildren().add(myZone.getEllipse());
+            isDrawZone = false;
+        }
+    }
+
+    private void startZonaStage(double x, double y) throws IOException
+    {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("zone_view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setTitle("Создание зоны заражения");
+        stage.setScene(scene);
+        ZoneController.zonaStage = stage;
+        ZoneController.xcenter = x;
+        ZoneController.ycenter= y;
+
+        stage.showAndWait();
+    }
+
+    @FXML
+    private void onClickLineBtn()
+    {
+        isDrawLine = true;
+        isDrawPoly = false;
+        isDrawEllipse = false;
+        isDrawZone = false;
     }
 
     @FXML
@@ -285,6 +352,7 @@ public class Controller {
         isDrawEllipse = true;
         isDrawLine = false;
         isDrawPoly = false;
+        isDrawZone = false;
     }
 
     @FXML
@@ -293,12 +361,16 @@ public class Controller {
         isDrawPoly = true;
         isDrawLine = false;
         isDrawEllipse = false;
+        isDrawZone = false;
     }
 
     @FXML
     private void onClickZoneBtn()
     {
-
+        isDrawEllipse = false;
+        isDrawLine = false;
+        isDrawPoly = false;
+        isDrawZone = true;
     }
 
     @FXML

@@ -23,7 +23,6 @@
                       <Menu fx:id="data_menu" mnemonicParsing="false" text="Данные">
                         <items>
                           <MenuItem fx:id="craete_data" mnemonicParsing="false" text="Создать" />
-                              <MenuItem fx:id="select_menu" mnemonicParsing="false" text="Выбрать" />
                         </items>
                       </Menu>
                       <Menu fx:id="tasks_menu" mnemonicParsing="false" text="Задачи">

@@ -80,6 +80,24 @@ public class MyEllipse {
 
     private double square;
     private double perimeter;
+    private double radiusX;
+    private double radiusY;
+
+    public double getRadiusX() {
+        return radiusX;
+    }
+
+    public void setRadiusX(double radiusX) {
+        this.radiusX = radiusX;
+    }
+
+    public double getRadiusY() {
+        return radiusY;
+    }
+
+    public void setRadiusY(double radiusY) {
+        this.radiusY = radiusY;
+    }
 
     public MyEllipse(Ellipse ellipse)
     {
@@ -95,17 +113,17 @@ public class MyEllipse {
                     Double gottenY1 = 63.9 * (regY - height1 * heightGrad / imgHeight);
                     Double height2 = y1+yRad - startY;
                     Double gottenY2 = 63.9*(regY - height2 * heightGrad / imgHeight);
-                    Double radiusY = abs(gottenY2-gottenY1);
+                    radiusY = abs(gottenY2-gottenY1);
 
                     Double width1 = x1 - startX;
                     Double gottenX1 = 63.9 * (regX + width1 * widthGrad / imgWidth);
                     Double width2 = x1+xRad - startX;
                     Double gottenX2 = 63.9*(regX + width2 * widthGrad / imgWidth);
-                    Double radiusX = abs(gottenX2-gottenX1);
+                    radiusX = abs(gottenX2-gottenX1);
 
-                    Double square = PI*2*radiusX*2*radiusY/4;
+                    square = PI*2*radiusX*2*radiusY/4;
 
-                    Double perimeter = 2*PI*sqrt((4*radiusX*radiusX+4*radiusY*radiusY)/8);
+                    perimeter = 2*PI*sqrt((4*radiusX*radiusX+4*radiusY*radiusY)/8);
 
                     alert.setHeaderText("Информация об эллипсе");
                     alert.setContentText("Площадь: "+square+"\nПериметр: "+perimeter+"\nРадиус вертикальный: "+radiusY+"\nРадиус горизонтальный: "+radiusX);
