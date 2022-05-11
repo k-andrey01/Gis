@@ -91,6 +91,11 @@ public class Controller {
     @FXML
     private Label y_coord;
 
+    @FXML
+    private Label xPix;
+    @FXML
+    private Label yPix;
+
     public static Double regX;
     public static Double regY;
 
@@ -141,13 +146,14 @@ public class Controller {
 
     @FXML
     private void getCoords(MouseEvent mouseEvent) throws IOException {
+        chooseX = mouseEvent.getX();
+        chooseY = mouseEvent.getY();
 
+        xPix.setText(chooseX.toString());
+        yPix.setText(chooseY.toString());
         if (isMapRegister) {
             startX = myMap.getX();
             startY = myMap.getImage().getHeight();
-
-            chooseX = mouseEvent.getX();
-            chooseY = mouseEvent.getY();
 
             Double width = chooseX - startX;
             Double height = chooseY - startY;

@@ -10,7 +10,7 @@
         <items>
           <AnchorPane fx:id="imgAnchor" minHeight="0.0" minWidth="0.0" prefHeight="290.0" prefWidth="205.0">
                <children>
-                  <ImageView fx:id="myMap" fitHeight="NaN" fitWidth="NaN" layoutY="28.0" onMouseClicked="#draw" onMouseMoved="#getCoords" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="69.8521838263531" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.008702187204846723" AnchorPane.topAnchor="27.817384630862847" />
+                  <ImageView fx:id="myMap" fitHeight="NaN" fitWidth="NaN" layoutY="28.0" onMouseClicked="#draw" onMouseMoved="#getCoords" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="69.8521838263531" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.008702187204846723" AnchorPane.topAnchor="29.0" />
                   <MenuBar fx:id="menu" layoutY="-1.0" prefHeight="28.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-303.0260970082854" AnchorPane.topAnchor="0.0">
                     <menus>
                       <Menu fx:id="file_menu" mnemonicParsing="false" text="Файл">
@@ -38,12 +38,15 @@
                </children></AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="366.0" prefWidth="296.0">
                <children>
-                  <Label layoutX="-1.0" layoutY="4.0" text="Координаты выбранной точки" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="132.89565654906087" AnchorPane.topAnchor="0.0" />
+                  <Label layoutX="-1.0" layoutY="4.0" text="Географические координаты текущей точки" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="132.89565654906087" AnchorPane.topAnchor="0.0" />
                   <Label layoutX="-16.0" layoutY="16.0" prefHeight="18.0" prefWidth="110.0" text="X" AnchorPane.leftAnchor="0.0" fx:id="x_coord" />
                   <Label fx:id="y_coord" layoutX="119.0" layoutY="16.0" prefHeight="18.0" prefWidth="110.0" text="Y" AnchorPane.leftAnchor="119.0" />
                   <Label layoutY="55.0" text="Закрепление" AnchorPane.leftAnchor="0.0" />
                   <Label fx:id="nowRegX" layoutY="73.0" prefHeight="18.0" prefWidth="110.0" text="null" AnchorPane.leftAnchor="0.0" />
                   <Label fx:id="nowRegY" layoutX="119.0" layoutY="73.0" prefHeight="18.0" prefWidth="110.0" text="null" AnchorPane.leftAnchor="119.0" />
+                  <Label layoutY="106.0" text="Координаты текущей точки по пикселям" />
+                  <Label layoutY="124.0" prefHeight="18.0" prefWidth="70.0" text="X" fx:id="xPix" />
+                  <Label fx:id="yPix" layoutX="119.0" layoutY="124.0" prefHeight="18.0" prefWidth="70.0" text="Y" />
                </children></AnchorPane>
         </items>
       </SplitPane>
