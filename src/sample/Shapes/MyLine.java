@@ -21,6 +21,25 @@ public class MyLine {
     private double x2;
     private double y2;
 
+    private String name;
+    private String about;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
     private double length;
 
     public MyLine(Line line)

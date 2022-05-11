@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.TableViewController">
+   <children>
+      <TabPane prefHeight="401.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+            <Tab text="Линии">
+                <TableView fx:id="linesTab">
+                  <columns>
+                     <TableColumn prefWidth="93.13045066155655" text="Наименование" />
+                     <TableColumn prefWidth="57.13042449951172" text="Длина" />
+                     <TableColumn prefWidth="449.11305821323276" text="Описание" />
+                  </columns></TableView>
+            </Tab>
+            <Tab text="Полигоны">
+                <TableView fx:id="polygonTab">
+                  <columns>
+                     <TableColumn prefWidth="97.13045066155655" text="Наименование" />
+                     <TableColumn prefWidth="83.53911590576172" text="Периметр" />
+                     <TableColumn prefWidth="418.22609532260776" text="Описание" />
+                  </columns></TableView>
+            </Tab>
+            <Tab text="Эллипсы">
+                <TableView fx:id="ellipseTab">
+                  <columns>
+                     <TableColumn prefWidth="92.13045066155655" text="Наименование" />
+                     <TableColumn prefWidth="75.0" text="Периметр" />
+                     <TableColumn prefWidth="75.0" text="Площадь" />
+                     <TableColumn prefWidth="357.28697789096714" text="Описание" />
+                  </columns></TableView>
+            </Tab>
+            <Tab text="Зоны заражения">
+                <TableView fx:id="zoneTab">
+                  <columns>
+                     <TableColumn prefWidth="91.13045066155655" text="Наименование" />
+                     <TableColumn prefWidth="75.0" text="Площадь" />
+                     <TableColumn prefWidth="75.0" text="Глубина" />
+                     <TableColumn prefWidth="358.1217557229984" text="Описание" />
+                  </columns></TableView>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

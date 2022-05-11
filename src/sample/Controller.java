@@ -109,6 +109,17 @@ public class Controller {
     private Label nowRegY;
 
     @FXML
+    private void openTable() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("table_view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setTitle("Данные");
+        stage.setScene(scene);
+
+        stage.showAndWait();
+    }
+
+    @FXML
     private void openNewFile() throws IOException {
         isMapRegister = false;
         FileChooser fileChooser = new FileChooser();

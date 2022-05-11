@@ -10,7 +10,7 @@
         <items>
           <AnchorPane fx:id="imgAnchor" minHeight="0.0" minWidth="0.0" prefHeight="290.0" prefWidth="205.0">
                <children>
-                  <ImageView fx:id="myMap" fitHeight="NaN" fitWidth="NaN" layoutY="28.0" onMouseClicked="#draw" onMouseMoved="#getCoords" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="69.8521838263531" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.008702187204846723" AnchorPane.topAnchor="27.817384630862847" />
+                  <ImageView fx:id="myMap" fitHeight="NaN" fitWidth="NaN" layoutY="28.0" onMouseClicked="#draw" onMouseMoved="#getCoords" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="69.8521838263531" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.008702187204846723" AnchorPane.topAnchor="29.0" />
                   <MenuBar fx:id="menu" layoutY="-1.0" prefHeight="28.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-303.0260970082854" AnchorPane.topAnchor="0.0">
                     <menus>
                       <Menu fx:id="file_menu" mnemonicParsing="false" text="Файл">
@@ -22,7 +22,7 @@
                       </Menu>
                       <Menu fx:id="data_menu" mnemonicParsing="false" text="Данные">
                         <items>
-                          <MenuItem fx:id="craete_data" mnemonicParsing="false" text="Создать" />
+                          <MenuItem fx:id="craete_data" mnemonicParsing="false" onAction="#openTable" text="Создать" />
                         </items>
                       </Menu>
                       <Menu fx:id="tasks_menu" mnemonicParsing="false" text="Задачи">

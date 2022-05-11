@@ -22,6 +22,25 @@ public class MyEllipse {
     private Double xRad;
     private Double yRad;
 
+    private String name;
+    private String about;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
     public Ellipse getEllipse() {
         return ellipse;
     }
