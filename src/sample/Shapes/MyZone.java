@@ -25,6 +25,29 @@ public class MyZone {
 
     private String name;
     private String about;
+    private Integer id;
+    private Double square;
+    private Double power;
+
+    public MyZone(Integer id, String name, Double power, Double square, String about) {
+        this.name = name;
+        this.about = about;
+        this.id = id;
+        this.square = square;
+        this.power = power;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Double getSquare() {
+        return square;
+    }
+
+    public Double getPower() {
+        return power;
+    }
 
     public String getName() {
         return name;

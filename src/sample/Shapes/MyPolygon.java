@@ -21,6 +21,18 @@ public class MyPolygon {
     private double[] points;
 
     private double perimeter = 0;
+    private Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public MyPolygon(Integer id, String name, double perimeter, String about) {
+        this.perimeter = perimeter;
+        this.id = id;
+        this.name = name;
+        this.about = about;
+    }
 
     private String name;
     private String about;

@@ -16,6 +16,7 @@ import static sample.Controller.*;
 public class MyLine {
     private Line line;
 
+    private Integer id;
     private double x1;
     private double y1;
     private double x2;
@@ -23,6 +24,17 @@ public class MyLine {
 
     private String name;
     private String about;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public MyLine(Integer id, String name, Double length, String about){
+        this.id = id;
+        this.name = name;
+        this.length=length;
+        this.about=about;
+    }
 
     public String getName() {
         return name;
@@ -76,7 +88,7 @@ public class MyLine {
                 alert.getButtonTypes().clear();
                 alert.getButtonTypes().addAll(ok);
 
-            Optional<ButtonType> result = alert.showAndWait();
+                Optional<ButtonType> result = alert.showAndWait();
             }
         };
         this.line.setOnMouseClicked(eventHandler);;

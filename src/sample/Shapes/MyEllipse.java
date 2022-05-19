@@ -24,6 +24,19 @@ public class MyEllipse {
 
     private String name;
     private String about;
+    private Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public MyEllipse(Integer id, String name, Double perimeter, Double square, String about){
+        this.id=id;
+        this.name=name;
+        this.perimeter=perimeter;
+        this.square=square;
+        this.about=about;
+    }
 
     public String getName() {
         return name;

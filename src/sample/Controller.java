@@ -27,6 +27,7 @@ import sample.Shapes.MyZone;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -101,6 +102,7 @@ public class Controller {
 
     @FXML
     private AnchorPane imgAnchor;
+
     @FXML
     private ImageView myMap;
     @FXML
@@ -183,7 +185,7 @@ public class Controller {
 
 
     @FXML
-    private void draw(MouseEvent mouseEvent){
+    private void draw(MouseEvent mouseEvent) throws SQLException {
         if (isDrawLine){
             if (countPoints==0) {
                 xLineStart = mouseEvent.getX();
@@ -211,6 +213,12 @@ public class Controller {
                 imgAnchor.getChildren().add(myLine.getLine());
                 countPoints=0;
                 isDrawLine=false;
+
+                TableController.myShape=new MyShape(0,"Линия",0.0,0.0,0.0);
+                if (TableController.myShape != null)
+                {
+                    TableController.databaseHandler.insertQuery();
+                }
             }
         }
 
@@ -262,6 +270,12 @@ public class Controller {
                     countPoints = 0;
                     isDrawPoly = false;
                     stopGetPoints = false;
+
+                    TableController.myShape=new MyShape(0,"Полигон",0.0,0.0,0.0);
+                    if (TableController.myShape != null)
+                    {
+                        TableController.databaseHandler.insertQuery();
+                    }
                 }
             }
         }
@@ -299,6 +313,12 @@ public class Controller {
                 imgAnchor.getChildren().add(myEllipse.getEllipse());
                 countPoints = 0;
                 isDrawEllipse = false;
+
+                TableController.myShape=new MyShape(0,"Эллипс",0.0,0.0,0.0);
+                if (TableController.myShape != null)
+                {
+                    TableController.databaseHandler.insertQuery();
+                }
             }
         }
 
@@ -337,6 +357,12 @@ public class Controller {
 
             imgAnchor.getChildren().add(myZone.getEllipse());
             isDrawZone = false;
+
+            TableController.myShape=new MyShape(0,"Заражение",0.0,0.0,0.0);
+            if (TableController.myShape != null)
+            {
+                TableController.databaseHandler.insertQuery();
+            }
         }
     }
 

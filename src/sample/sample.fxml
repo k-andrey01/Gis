@@ -22,7 +22,7 @@
                       </Menu>
                       <Menu fx:id="data_menu" mnemonicParsing="false" text="Данные">
                         <items>
-                          <MenuItem fx:id="craete_data" mnemonicParsing="false" onAction="#openTable" text="Создать" />
+                          <MenuItem fx:id="craete_data" mnemonicParsing="false" onAction="#openTable" text="Таблица" />
                         </items>
                       </Menu>
                       <Menu fx:id="tasks_menu" mnemonicParsing="false" text="Задачи">
