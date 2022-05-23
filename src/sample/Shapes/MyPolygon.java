@@ -86,10 +86,16 @@ public class MyPolygon {
                 }
 
                 ButtonType ok = new ButtonType("ОК");
+                ButtonType delete = new ButtonType("Удалить");
                 alert.getButtonTypes().clear();
-                alert.getButtonTypes().addAll(ok);
+                alert.getButtonTypes().addAll(ok, delete);
 
                 Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == delete)
+                {
+                    Controller.group.getChildren().remove(polygon);
+                    Controller.myLines.remove(MyPolygon.this);
+                }
             }
         };
         this.polygon.setOnMouseClicked(eventHandler);;

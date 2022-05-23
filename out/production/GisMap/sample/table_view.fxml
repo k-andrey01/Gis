@@ -13,6 +13,5 @@
     </ScrollPane>
     <Button layoutX="500.0" layoutY="214.0" mnemonicParsing="false" onAction="#onClickDeleteBtn" prefWidth="100" text="Удалить" />
     <Button layoutX="500.0" layoutY="263.0" mnemonicParsing="false" onAction="#onClickEditBtn" prefWidth="100" text="Редактировать" />
-    <Button layoutX="500.0" layoutY="314.0" mnemonicParsing="false" onAction="#onClickAddBtn" prefWidth="100" text="Добавить" />
     <Button layoutX="500.0" layoutY="365.0" mnemonicParsing="false" onAction="#onClickCloseBtn" prefWidth="100" text="Закрыть" />
 </AnchorPane>

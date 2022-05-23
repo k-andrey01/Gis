@@ -85,10 +85,16 @@ public class MyLine {
                 }
 
                 ButtonType ok = new ButtonType("ОК");
+                ButtonType delete = new ButtonType("Удалить");
                 alert.getButtonTypes().clear();
-                alert.getButtonTypes().addAll(ok);
+                alert.getButtonTypes().addAll(ok, delete);
 
                 Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == delete)
+                {
+                    Controller.group.getChildren().remove(line);
+                    Controller.myLines.remove(MyLine.this);
+                }
             }
         };
         this.line.setOnMouseClicked(eventHandler);;

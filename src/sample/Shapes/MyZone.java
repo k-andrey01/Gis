@@ -87,10 +87,16 @@ public class MyZone {
                         + "\nГлубина зоны заражения = " + ZoneController.G + " км"
                         + "\nПлощадь = " + geoSquare + " км^2");
                 ButtonType ok = new ButtonType("ОК");
+                ButtonType delete = new ButtonType("Удалить");
                 alert.getButtonTypes().clear();
-                alert.getButtonTypes().addAll(ok);
+                alert.getButtonTypes().addAll(ok, delete);
 
                 Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == delete)
+                {
+                    Controller.group.getChildren().remove(ellipse);
+                    Controller.myLines.remove(MyZone.this);
+                }
             }
         };
         this.ellipse.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);

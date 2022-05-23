@@ -99,29 +99,11 @@ public class TableController
     }
 
     @FXML
-    private void onClickAddBtn() throws SQLException
-    {
-        initMyShape();
-        startAddingShapeStage();
-        if (myShape != null)
-        {
-            databaseHandler.insertQuery();
-            if (myShape != null)
-            {
-                myShapes.add(myShape);
-            }
-            else
-            {
-                //showError();
-            }
-        }
-    }
-
-    @FXML
     private void onClickCloseBtn()
     {
-        myShape = null;
-        tableStage.close();
+        Stage stage = (Stage) shapesTableView.getScene().getWindow();
+        // do what you have to do
+        stage.close();
     }
 
     private void initTableColumns()

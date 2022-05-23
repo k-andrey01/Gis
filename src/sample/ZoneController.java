@@ -88,7 +88,9 @@ public class ZoneController {
     @FXML
     private void onClickCancelBtn()
     {
-        zonaStage.close();
+        Stage stage = (Stage) chlorCheckBox.getScene().getWindow();
+        // do what you have to do
+        stage.close();
     }
 
     private double calcT(Substance substance)

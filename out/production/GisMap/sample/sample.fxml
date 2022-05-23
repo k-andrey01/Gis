@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -10,7 +11,6 @@
         <items>
           <AnchorPane fx:id="imgAnchor" minHeight="0.0" minWidth="0.0" prefHeight="290.0" prefWidth="205.0">
                <children>
-                  <ImageView fx:id="myMap" fitHeight="NaN" fitWidth="NaN" layoutY="28.0" onMouseClicked="#draw" onMouseMoved="#getCoords" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="69.8521838263531" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.008702187204846723" AnchorPane.topAnchor="29.0" />
                   <MenuBar fx:id="menu" layoutY="-1.0" prefHeight="28.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-303.0260970082854" AnchorPane.topAnchor="0.0">
                     <menus>
                       <Menu fx:id="file_menu" mnemonicParsing="false" text="Файл">
@@ -35,6 +35,11 @@
                       </Menu>
                     </menus>
                   </MenuBar>
+                  <Group fx:id="mainGroup" AnchorPane.bottomAnchor="63.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0">
+                     <children>
+                        <ImageView fx:id="myMap" fitHeight="NaN" fitWidth="NaN" onMouseClicked="#draw" onMouseMoved="#getCoords" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </Group>
                </children></AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="366.0" prefWidth="296.0">
                <children>

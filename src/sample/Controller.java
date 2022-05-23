@@ -38,10 +38,10 @@ public class Controller {
     private static MyPolygon myPolygon;
     private static MyEllipse myEllipse;
     private static MyZone myZone;
-    public ArrayList<MyLine> myLines = new ArrayList<>();
-    public ArrayList<MyPolygon> myPolygons = new ArrayList<>();
-    public ArrayList<MyEllipse> myEllipses = new ArrayList<>();
-    public ArrayList<MyZone> myZones = new ArrayList<>();
+    public static ArrayList<MyLine> myLines = new ArrayList<>();
+    public static ArrayList<MyPolygon> myPolygons = new ArrayList<>();
+    public static ArrayList<MyEllipse> myEllipses = new ArrayList<>();
+    public static ArrayList<MyZone> myZones = new ArrayList<>();
 
     public static Double imgHeight;
     public static Double imgWidth;
@@ -109,6 +109,10 @@ public class Controller {
     private Label nowRegX;
     @FXML
     private Label nowRegY;
+
+    @FXML
+    private Group mainGroup;
+    public static Group group;
 
     @FXML
     private void openTable() throws IOException {
@@ -186,10 +190,14 @@ public class Controller {
 
     @FXML
     private void draw(MouseEvent mouseEvent) throws SQLException {
+        if (group==null){
+            group = new Group();
+            mainGroup.getChildren().add(group);
+        }
         if (isDrawLine){
             if (countPoints==0) {
                 xLineStart = mouseEvent.getX();
-                yLineStart = mouseEvent.getY()+30;
+                yLineStart = mouseEvent.getY();
                 myLine = new MyLine(new Line());
                 myLine.getLine().setStartX(xLineStart);
                 myLine.getLine().setStartY(yLineStart);
@@ -198,7 +206,7 @@ public class Controller {
                 countPoints++;
             }else{
                 xLineEnd = mouseEvent.getX();
-                yLineEnd = mouseEvent.getY()+30;
+                yLineEnd = mouseEvent.getY();
 
                 myLine.setX2(xLineEnd);
                 myLine.setY2(yLineEnd);
@@ -210,7 +218,8 @@ public class Controller {
 
                 myLines.add(myLine);
 
-                imgAnchor.getChildren().add(myLine.getLine());
+                //imgAnchor.getChildren().add(myLine.getLine());
+                group.getChildren().add(myLine.getLine());
                 countPoints=0;
                 isDrawLine=false;
 
@@ -227,22 +236,24 @@ public class Controller {
                 counterPoints = 2;
                 polyLines.clear();
                 xLineStart = mouseEvent.getX();
-                yLineStart = mouseEvent.getY()+30;
+                yLineStart = mouseEvent.getY();
                 Line line1 = new Line(xLineStart,yLineStart,xLineStart,yLineStart);
                 line1.setStrokeWidth(5);
                 line1.setStroke(Color.ORANGE);
-                imgAnchor.getChildren().add(line1);
+                //imgAnchor.getChildren().add(line1);
+                group.getChildren().add(line1);
                 polyLines.add(xLineStart);
                 polyLines.add(yLineStart);
                 countPoints++;
             }else{
                 if (!stopGetPoints && counterPoints<=50){
                     xLineEnd = mouseEvent.getX();
-                    yLineEnd = mouseEvent.getY()+30;
+                    yLineEnd = mouseEvent.getY();
                     Line line1 = new Line(xLineEnd,yLineEnd,xLineEnd,yLineEnd);
                     line1.setStrokeWidth(5);
                     line1.setStroke(Color.ORANGE);
-                    imgAnchor.getChildren().add(line1);
+                    //imgAnchor.getChildren().add(line1);
+                    group.getChildren().add(line1);
                     polyLines.add(xLineEnd);
                     polyLines.add(yLineEnd);
                     if (counterPoints>0)
@@ -266,7 +277,8 @@ public class Controller {
 
                     myPolygons.add(myPolygon);
 
-                    imgAnchor.getChildren().add(myPolygon.getPolygon());
+                    //imgAnchor.getChildren().add(myPolygon.getPolygon());
+                    group.getChildren().add(myPolygon.getPolygon());
                     countPoints = 0;
                     isDrawPoly = false;
                     stopGetPoints = false;
@@ -283,7 +295,7 @@ public class Controller {
         else if (isDrawEllipse){
             if (countPoints==0){
                 xLineStart = mouseEvent.getX();
-                yLineStart = mouseEvent.getY()+30;
+                yLineStart = mouseEvent.getY();
                 myEllipse = new MyEllipse(new Ellipse());
                 countPoints++;
             }
@@ -292,7 +304,7 @@ public class Controller {
                 countPoints++;
             }
             else if (countPoints==2){
-                ellipseRadiusY = abs(mouseEvent.getY()+30-yLineStart);
+                ellipseRadiusY = abs(mouseEvent.getY()-yLineStart);
                 countPoints++;
 
                 myEllipse.getEllipse().setCenterX(xLineStart);
@@ -310,7 +322,8 @@ public class Controller {
 
                 myEllipses.add(myEllipse);
 
-                imgAnchor.getChildren().add(myEllipse.getEllipse());
+                //imgAnchor.getChildren().add(myEllipse.getEllipse());
+                group.getChildren().add(myEllipse.getEllipse());
                 countPoints = 0;
                 isDrawEllipse = false;
 
@@ -324,7 +337,7 @@ public class Controller {
 
         else if (isDrawZone){
             xLineStart = mouseEvent.getX();
-            yLineStart = mouseEvent.getY()+30;
+            yLineStart = mouseEvent.getY();
             try {
                 startZonaStage(xLineStart, yLineStart);
             } catch (IOException e) {
@@ -355,7 +368,8 @@ public class Controller {
             myZone.setGeoSquare(ZoneController.Sf);
             myZones.add(myZone);
 
-            imgAnchor.getChildren().add(myZone.getEllipse());
+            //imgAnchor.getChildren().add(myZone.getEllipse());
+            group.getChildren().add(myZone.getEllipse());
             isDrawZone = false;
 
             TableController.myShape=new MyShape(0,"Заражение",0.0,0.0,0.0);
